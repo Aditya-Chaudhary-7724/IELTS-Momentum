@@ -4,110 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IELTS Momentum Loop</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      margin: 0;
-      padding: 0;
-      color: #1f2937;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 24px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 4px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #6b7280;
-      margin-bottom: 32px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-    }
-
-    button {
-      margin-top: 16px;
-      padding: 10px 16px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    .progress-bar {
-      background: #e5e7eb;
-      border-radius: 8px;
-      overflow: hidden;
-      height: 16px;
-      margin-top: 8px;
-    }
-
-    .progress {
-      background: #22c55e;
-      height: 100%;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #6b7280;
-      margin-top: 40px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div class="container">
 
-    <h1>IELTS Momentum Loop</h1>
-    <div class="subtitle">
-      Build daily prep habits · Track confidence · Stay consistent
-    </div>
+    <header>
+      <h1>IELTS Momentum Loop</h1>
+      <p class="subtitle">Build daily prep habits · Track confidence · Stay consistent</p>
+    </header>
 
     <!-- Onboarding -->
-    <div class="card">
+    <section class="card">
       <h2>Quick Setup</h2>
 
       <label>Target IELTS Score</label>
@@ -118,90 +27,64 @@
         <option>8.0</option>
       </select>
 
-      <label>Daily Time Available (minutes)</label>
+      <label>Daily Time Available (mins)</label>
       <select id="dailyTime">
         <option>10</option>
         <option>15</option>
         <option>20</option>
       </select>
 
-      <button onclick="generatePlan()">Generate My Plan</button>
-    </div>
+      <button onclick="generatePlan()">Generate Plan</button>
+    </section>
 
     <!-- Micro Goal -->
-    <div class="card">
+    <section class="card">
       <h2>🎯 Today’s Micro-Goal</h2>
-      <p id="microGoal">Click "Generate My Plan" to get started.</p>
+      <p id="microGoal">No goal generated yet.</p>
       <button onclick="completeGoal()">Mark as Done</button>
-    </div>
+    </section>
 
     <!-- LRI -->
-    <div class="card">
-      <h2>Leap Ready Index (LRI)</h2>
+    <section class="card">
+      <h2>Leap Ready Index (Confidence)</h2>
       <div class="progress-bar">
         <div id="lriBar" class="progress"></div>
       </div>
-      <p><strong>LRI Score:</strong> <span id="lriScore">0.0</span> / 9.0</p>
-    </div>
+      <p><strong>LRI:</strong> <span id="lriScore">0.0</span> / 9.0</p>
+    </section>
 
-    <!-- Streak -->
-    <div class="card">
-      <h2>🔥 Momentum</h2>
-      <div class="stats">
-        <div>Streak: <span id="streak">0</span> days</div>
-        <div>Skip Tokens: <span id="tokens">0</span></div>
+    <!-- Momentum -->
+    <section class="card stats">
+      <div>
+        🔥 Streak<br>
+        <span id="streak">0</span> days
       </div>
-    </div>
+      <div>
+        🎟 Skip Tokens<br>
+        <span id="tokens">0</span>
+      </div>
+      <div>
+        📆 Active Days<br>
+        <span id="activeDays">0</span>/7
+      </div>
+    </section>
 
     <!-- Weekly Summary -->
-    <div class="card">
-      <h2>📊 Weekly Snapshot</h2>
-      <p>Active Days: <span id="activeDays">0</span> / 7</p>
-      <p>Strong Skill: Speaking</p>
-      <p>Next Focus: Listening</p>
-    </div>
+    <section class="card">
+      <h2>📊 Weekly Summary</h2>
+      <ul>
+        <li>Strong Skill: <strong id="strongSkill">Speaking</strong></li>
+        <li>Focus Next: <strong id="nextFocus">Listening</strong></li>
+        <li>Status: <strong id="status">On Track</strong></li>
+      </ul>
+    </section>
 
-    <div class="footer">
-      Prototype only · Simulated data · Built for product concept validation
-    </div>
+    <footer>
+      Prototype · Simulated logic · Built for product validation
+    </footer>
 
   </div>
 
-  <script>
-    let lri = 0;
-    let streak = 0;
-    let tokens = 0;
-    let activeDays = 0;
-
-    function generatePlan() {
-      const time = document.getElementById("dailyTime").value;
-      document.getElementById("microGoal").innerText =
-        `Complete 1 Speaking cue card (Estimated time: ${time} mins)`;
-    }
-
-    function completeGoal() {
-      if (lri >= 9) return;
-
-      lri += 0.3;
-      if (lri > 9) lri = 9;
-
-      streak += 1;
-      activeDays += 1;
-
-      if (streak % 3 === 0) tokens += 1;
-
-      updateUI();
-      alert("Nice work! Momentum building 🚀");
-    }
-
-    function updateUI() {
-      document.getElementById("lriScore").innerText = lri.toFixed(1);
-      document.getElementById("lriBar").style.width = (lri / 9) * 100 + "%";
-      document.getElementById("streak").innerText = streak;
-      document.getElementById("tokens").innerText = tokens;
-      document.getElementById("activeDays").innerText = activeDays;
-    }
-  </script>
-
+  <script src="app.js"></script>
 </body>
 </html>
